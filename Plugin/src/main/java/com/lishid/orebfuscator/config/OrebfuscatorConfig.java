@@ -7,7 +7,6 @@ package com.lishid.orebfuscator.config;
 
 import java.util.Map;
 
-import com.lishid.orebfuscator.utils.Globals;
 import org.bukkit.entity.Player;
 
 import com.lishid.orebfuscator.Orebfuscator;

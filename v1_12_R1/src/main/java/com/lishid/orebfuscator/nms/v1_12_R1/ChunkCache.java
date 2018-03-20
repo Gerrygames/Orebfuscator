@@ -1,4 +1,4 @@
-/**
+/*
  * @author lishid
  * @author Aleksey Terzi
  *
@@ -16,7 +16,7 @@ import net.minecraft.server.v1_12_R1.RegionFile;
 import com.lishid.orebfuscator.nms.IChunkCache;
 
 public class ChunkCache implements IChunkCache {
-    private static final HashMap<File, RegionFile> cachedRegionFiles = new HashMap<File, RegionFile>();
+    private static final HashMap<File, RegionFile> cachedRegionFiles = new HashMap<>();
     
     private int maxLoadedCacheFiles;
     

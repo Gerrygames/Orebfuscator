@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 import com.lishid.orebfuscator.Orebfuscator;
 
 public class BlockHitManager {
-    private static HashMap<Player, PlayerBlockTracking> playersBlockTrackingStatus = new HashMap<Player, PlayerBlockTracking>();
+    private static HashMap<Player, PlayerBlockTracking> playersBlockTrackingStatus = new HashMap<>();
 
     public static boolean hitBlock(Player player, Block block) {
         if (player.getGameMode() == GameMode.CREATIVE)

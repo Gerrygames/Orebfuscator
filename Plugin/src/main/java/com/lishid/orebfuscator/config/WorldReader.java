@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -18,7 +18,7 @@ import com.lishid.orebfuscator.DeprecatedMethods;
 import com.lishid.orebfuscator.utils.Globals;
 
 public class WorldReader {
-	private static enum WorldType { Default, Normal, TheEnd, Nether }
+	private enum WorldType { Default, Normal, TheEnd, Nether }
 	
     private boolean[] transparentBlocks;
     
@@ -50,14 +50,14 @@ public class WorldReader {
         this.transparentBlocks = this.orebfuscatorConfig.getTransparentBlocks();
         
     	ConfigurationSection section = getConfig().getConfigurationSection("Worlds");
-    	Set<String> keys = section != null ? section.getKeys(false): new HashSet<String>();
+    	Set<String> keys = section != null ? section.getKeys(false): new HashSet<>();
     	
     	this.defaultWorld = readWorldByType(keys, WorldType.Default, null);
     	this.normalWorld = readWorldByType(keys, WorldType.Normal, this.defaultWorld);
     	this.endWorld = readWorldByType(keys, WorldType.TheEnd, this.defaultWorld);
     	this.netherWorld = readWorldByType(keys, WorldType.Nether, this.defaultWorld);
     	
-    	this.worlds = new HashMap<String, WorldConfig>();
+    	this.worlds = new HashMap<>();
     	
     	for(String key : keys) {
     		readWorldsByName("Worlds." + key);
@@ -92,7 +92,7 @@ public class WorldReader {
     		String worldPath = "Worlds." + key;
     		List<String> types = getStringList(worldPath + ".Types", null, false);
     		
-    		if(types != null && types.size() > 0 && parseWorldTypes(types).contains(worldType)) {
+    		if(types != null && !types.isEmpty() && parseWorldTypes(types).contains(worldType)) {
     			if(worldType == WorldType.Default) {
     				world = new WorldConfig();
     				world.setDefaults();
@@ -132,7 +132,7 @@ public class WorldReader {
     private void readWorldsByName(String worldPath) {
     	List<String> names = getStringList(worldPath + ".Names", null, false);
     	
-    	if(names == null || names.size() == 0) {
+    	if(names == null || names.isEmpty()) {
     		return;
     	}
     	
@@ -151,7 +151,7 @@ public class WorldReader {
     }
     
     private List<WorldType> parseWorldTypes(List<String> types) {
-    	List<WorldType> parsedTypes = new ArrayList<WorldType>();
+    	List<WorldType> parsedTypes = new ArrayList<>();
     	
     	for(String type : types) {
     		WorldType worldType;
@@ -257,7 +257,7 @@ public class WorldReader {
     	
     	Set<String> keys = section.getKeys(false);
     	
-    	List<ProximityHiderConfig.BlockSetting> list = new ArrayList<ProximityHiderConfig.BlockSetting>();
+    	List<ProximityHiderConfig.BlockSetting> list = new ArrayList<>();
     	
     	for(String key : keys) {
     		Integer blockId = this.materialReader.getMaterialId(key);

@@ -31,7 +31,6 @@ import com.comphenix.protocol.wrappers.nbt.NbtType;
 import com.lishid.orebfuscator.DeprecatedMethods;
 import com.lishid.orebfuscator.Orebfuscator;
 import com.lishid.orebfuscator.cache.ObfuscatedCachedChunk;
-import com.lishid.orebfuscator.cache.ObfuscatedDataCache;
 import com.lishid.orebfuscator.chunkmap.ChunkData;
 import com.lishid.orebfuscator.chunkmap.ChunkMapManager;
 import com.lishid.orebfuscator.config.ProximityHiderConfig;
@@ -54,7 +53,7 @@ public class Calculations {
         	output = cache.data;
         } else {
 	        // Blocks kept track for ProximityHider
-	        ArrayList<BlockCoord> proximityBlocks = new ArrayList<BlockCoord>();
+	        ArrayList<BlockCoord> proximityBlocks = new ArrayList<>();
 	        
 	        output = obfuscate(chunkData, player, proximityBlocks);
 	
@@ -64,15 +63,14 @@ public class Calculations {
 		            // Save cache
 		            int[] proximityList = new int[proximityBlocks.size() * 3];
 		            int index = 0;
-		            
-		            for (int i = 0; i < proximityBlocks.size(); i++) {
-		            	BlockCoord b = proximityBlocks.get(i);
-		                if (b != null) {
-		                    proximityList[index++] = b.x;
-		                    proximityList[index++] = b.y;
-		                    proximityList[index++] = b.z;
-		                }
-		            }
+
+			        for (BlockCoord b : proximityBlocks) {
+				        if (b != null) {
+					        proximityList[index++] = b.x;
+					        proximityList[index++] = b.y;
+					        proximityList[index++] = b.z;
+				        }
+			        }
 		            
 		            cache.write(cache.hash, output, proximityList);
 		            
@@ -313,9 +311,10 @@ public class Calculations {
         chunkData.useCache = true;
         
         // Hash the chunk
-        long hash = CalculationsUtil.Hash(chunkData.data, chunkData.data.length);
+        long hash = CalculationsUtil.hash(chunkData.data, chunkData.data.length);
         // Get cache folder
-        File cacheFolder = new File(ObfuscatedDataCache.getCacheFolder(), player.getWorld().getName());
+	    World world = player.getWorld();
+        File cacheFolder = new File(world.getWorldFolder(), "cache");
         // Create cache objects
         ObfuscatedCachedChunk cache = new ObfuscatedCachedChunk(cacheFolder, chunkData.chunkX, chunkData.chunkZ);
         
@@ -326,7 +325,7 @@ public class Calculations {
 
         if (storedHash == hash && cache.data != null) {
             int[] proximityList = cache.proximityList;
-        	ArrayList<BlockCoord> proximityBlocks = new ArrayList<BlockCoord>();
+        	ArrayList<BlockCoord> proximityBlocks = new ArrayList<>();
         	
             // Decrypt chest list
             if (proximityList != null) {

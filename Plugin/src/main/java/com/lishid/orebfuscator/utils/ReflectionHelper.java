@@ -22,7 +22,7 @@ import java.lang.reflect.Modifier;
 import com.lishid.orebfuscator.Orebfuscator;
 
 public class ReflectionHelper {
-    public static Object getPrivateField(Class<? extends Object> c, Object object, String fieldName) {
+    public static Object getPrivateField(Class<?> c, Object object, String fieldName) {
         try {
             Field field = c.getDeclaredField(fieldName);
             field.setAccessible(true);
@@ -38,7 +38,7 @@ public class ReflectionHelper {
         return getPrivateField(object.getClass(), object, fieldName);
     }
 
-    public static void setPrivateField(Class<? extends Object> c, Object object, String fieldName, Object value) {
+    public static void setPrivateField(Class<?> c, Object object, String fieldName, Object value) {
         try {
             Field field = c.getDeclaredField(fieldName);
             field.setAccessible(true);

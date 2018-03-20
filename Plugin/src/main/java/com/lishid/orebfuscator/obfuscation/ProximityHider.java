@@ -35,13 +35,13 @@ import com.lishid.orebfuscator.types.BlockCoord;
 import com.lishid.orebfuscator.types.BlockState;
 
 public class ProximityHider extends Thread implements Runnable {
-    private static final Map<Player, ProximityHiderPlayer> proximityHiderTracker = new WeakHashMap<Player, ProximityHiderPlayer>();
-    private static final Map<Player, Location> playersToCheck = new HashMap<Player, Location>();
-    private static final HashSet<Player> playersToReload = new HashSet<Player>();
+    private static final Map<Player, ProximityHiderPlayer> proximityHiderTracker = new WeakHashMap<>();
+    private static final Map<Player, Location> playersToCheck = new HashMap<>();
+    private static final HashSet<Player> playersToReload = new HashSet<>();
 
     private static ProximityHider thread = new ProximityHider();
 
-    private Map<Player, ProximityHiderPlayer> proximityHiderTrackerLocal = new WeakHashMap<Player, ProximityHiderPlayer>();
+    private Map<Player, ProximityHiderPlayer> proximityHiderTrackerLocal = new WeakHashMap<>();
     private long lastExecute = System.currentTimeMillis();
     private AtomicBoolean kill = new AtomicBoolean(false);
     private static boolean running = false;
@@ -77,7 +77,7 @@ public class ProximityHider extends Thread implements Runnable {
                     return;
                 }
 
-                HashMap<Player, Location> checkPlayers = new HashMap<Player, Location>();
+                HashMap<Player, Location> checkPlayers = new HashMap<>();
 
                 synchronized (playersToCheck) {
                     checkPlayers.putAll(playersToCheck);
@@ -143,7 +143,7 @@ public class ProximityHider extends Thread implements Runnable {
 
                     int distanceSquared = proximityHider.getDistanceSquared();
                     
-                    ArrayList<BlockCoord> removedBlocks = new ArrayList<BlockCoord>();
+                    ArrayList<BlockCoord> removedBlocks = new ArrayList<>();
                     Location playerLocation = p.getLocation();
                     // 4.3.1 -- GAZE CHECK
                     Location playerEyes = p.getEyeLocation();
@@ -207,7 +207,7 @@ public class ProximityHider extends Thread implements Runnable {
         running = false;
     }
     
-    /**
+    /*
      * Basic idea here is to take some rays from the considered block to the player's eyes, and decide if
      * any of those rays can reach the eyes unimpeded.
      * 
@@ -305,7 +305,7 @@ public class ProximityHider extends Thread implements Runnable {
         		playerInfo.clearChunks();
             }
             
-            if(blocks.size() > 0) {
+            if(!blocks.isEmpty()) {
             	playerInfo.putBlocks(chunkX, chunkZ, blocks);
             } else {
             	playerInfo.removeChunk(chunkX, chunkZ);

@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -23,9 +23,9 @@ import com.lishid.orebfuscator.nms.IChunkManager;
 import com.lishid.orebfuscator.types.ChunkCoord;
 
 public class ChunkReloader extends Thread implements Runnable {
-    private static final Map<World, HashSet<ChunkCoord>> loadedChunks = new WeakHashMap<World, HashSet<ChunkCoord>>();
-    private static final Map<World, HashSet<ChunkCoord>> unloadedChunks = new WeakHashMap<World, HashSet<ChunkCoord>>();
-    private static final Map<World, HashSet<ChunkCoord>> chunksForReload = new WeakHashMap<World, HashSet<ChunkCoord>>();
+    private static final Map<World, HashSet<ChunkCoord>> loadedChunks = new WeakHashMap<>();
+    private static final Map<World, HashSet<ChunkCoord>> unloadedChunks = new WeakHashMap<>();
+    private static final Map<World, HashSet<ChunkCoord>> chunksForReload = new WeakHashMap<>();
 
     private static ChunkReloader thread = new ChunkReloader();
 
@@ -48,10 +48,10 @@ public class ChunkReloader extends Thread implements Runnable {
     }
 
     public void run() {
-        HashSet<ChunkCoord> localLoadedChunks = new HashSet<ChunkCoord>();
-    	HashSet<ChunkCoord> localUnloadedChunks = new HashSet<ChunkCoord>();
-        Map<World, HashSet<ChunkCoord>> localChunksForReload = new WeakHashMap<World, HashSet<ChunkCoord>>();
-        ArrayList<World> localWorldsToCheck = new ArrayList<World>();
+        HashSet<ChunkCoord> localLoadedChunks = new HashSet<>();
+    	HashSet<ChunkCoord> localUnloadedChunks = new HashSet<>();
+        Map<World, HashSet<ChunkCoord>> localChunksForReload = new WeakHashMap<>();
+        ArrayList<World> localWorldsToCheck = new ArrayList<>();
 
         while (!this.isInterrupted() && !kill.get()) {
             try {
@@ -74,7 +74,7 @@ public class ChunkReloader extends Thread implements Runnable {
                 	HashSet<ChunkCoord> localChunksForReloadForWorld = localChunksForReload.get(world);
                 	
                 	if(localChunksForReloadForWorld == null) {
-                		localChunksForReload.put(world, localChunksForReloadForWorld = new HashSet<ChunkCoord>());
+                		localChunksForReload.put(world, localChunksForReloadForWorld = new HashSet<>());
                 	}
                 	
                 	synchronized (chunksForReload) {
@@ -138,7 +138,7 @@ public class ChunkReloader extends Thread implements Runnable {
     }
     
     private static void scheduleReloadChunks(final World world, HashSet<ChunkCoord> chunksForReloadForWorld) {
-    	File cacheFolder = new File(ObfuscatedDataCache.getCacheFolder(), world.getName());
+    	File cacheFolder = new File(world.getWorldFolder(), "cache");
     	final IChunkManager chunkManager = Orebfuscator.nms.getChunkManager(world);    	
     	
     	for(final ChunkCoord chunk : chunksForReloadForWorld) {
@@ -159,7 +159,7 @@ public class ChunkReloader extends Thread implements Runnable {
     
     private static void runReloadChunk(World world, IChunkManager chunkManager, ChunkCoord chunk) {
 		//Reload chunk for players
-    	HashSet<Player> affectedPlayers = new HashSet<Player>();
+    	HashSet<Player> affectedPlayers = new HashSet<>();
     	
 		if(!world.isChunkLoaded(chunk.x, chunk.z)) return;
 		
@@ -168,7 +168,7 @@ public class ChunkReloader extends Thread implements Runnable {
 	    		HashSet<ChunkCoord> chunksForReloadForWorld = chunksForReload.get(world);
 	    		
 	    		if(chunksForReloadForWorld == null) {
-	    			chunksForReload.put(world, chunksForReloadForWorld = new HashSet<ChunkCoord>());
+	    			chunksForReload.put(world, chunksForReloadForWorld = new HashSet<>());
 	    		}
 	    		
 	    		chunksForReloadForWorld.add(chunk);
@@ -179,7 +179,7 @@ public class ChunkReloader extends Thread implements Runnable {
 			//Orebfuscator.log("Force chunk x = " + chunk.x + ", z = " + chunk.z + " to reload for players");/*debug*/
 		}
 		
-		if(affectedPlayers.size() > 0) {
+		if(!affectedPlayers.isEmpty()) {
 			ProximityHiderConfig proximityHider = Orebfuscator.configManager.getWorld(world).getProximityHiderConfig();
 			
 			if(proximityHider.isEnabled()) {
@@ -211,7 +211,7 @@ public class ChunkReloader extends Thread implements Runnable {
         	HashSet<ChunkCoord> chunks = loadedChunks.get(world);
         	
         	if(chunks == null) {
-        		loadedChunks.put(world, chunks = new HashSet<ChunkCoord>());
+        		loadedChunks.put(world, chunks = new HashSet<>());
         	}
         	
         	chunks.add(new ChunkCoord(chunkX, chunkZ));
@@ -233,7 +233,7 @@ public class ChunkReloader extends Thread implements Runnable {
         	HashSet<ChunkCoord> chunks = unloadedChunks.get(world);
         	
         	if(chunks == null) {
-        		unloadedChunks.put(world, chunks = new HashSet<ChunkCoord>());
+        		unloadedChunks.put(world, chunks = new HashSet<>());
         	}
         	
         	chunks.add(new ChunkCoord(chunkX, chunkZ));

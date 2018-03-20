@@ -18,8 +18,6 @@ package com.lishid.orebfuscator.commands;
 
 import java.io.IOException;
 
-import com.lishid.orebfuscator.config.WorldConfig;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

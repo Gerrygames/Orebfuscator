@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -11,12 +11,7 @@ import java.util.Arrays;
 import com.lishid.orebfuscator.types.BlockState;
 
 public class ChunkMapManager {
-    private static final ThreadLocal<ChunkMapBuffer> _buffer = new ThreadLocal<ChunkMapBuffer>() {
-    	@Override
-        protected ChunkMapBuffer initialValue() {
-            return new ChunkMapBuffer();
-        }
-    };
+    private static final ThreadLocal<ChunkMapBuffer> _buffer = ThreadLocal.withInitial(ChunkMapBuffer::new);
     
     private ChunkMapBuffer buffer;
     private ChunkData chunkData;

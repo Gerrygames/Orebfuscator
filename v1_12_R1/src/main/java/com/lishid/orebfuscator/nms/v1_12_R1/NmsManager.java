@@ -1,4 +1,4 @@
-/**
+/*
  * @author lishid
  * @author Aleksey Terzi
  *

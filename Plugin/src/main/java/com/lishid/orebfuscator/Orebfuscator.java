@@ -39,7 +39,7 @@ import com.lishid.orebfuscator.listeners.OrebfuscatorPlayerListener;
 import com.lishid.orebfuscator.nms.INmsManager;
 import com.lishid.orebfuscator.utils.Globals;
 
-/**
+/*
  * Orebfuscator Anti X-RAY
  *
  * @author lishid
@@ -102,13 +102,6 @@ public class Orebfuscator extends JavaPlugin {
         ObfuscatedDataCache.resetCacheFolder();
 
         nms.setMaxLoadedCacheFiles(config.getMaxLoadedCacheFiles());
-        
-        //Make sure cache is cleared if config was changed since last start
-        try {
-			ObfuscatedDataCache.checkCacheAndConfigSynchronized();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
     }
 
     private void makeConfigExample() {
@@ -178,14 +171,14 @@ public class Orebfuscator extends JavaPlugin {
         }
     }
 
-    /**
+    /*
      * Log an information
      */
     public static void log(String text) {
         logger.info(Globals.LogPrefix + text);
     }
 
-    /**
+    /*
      * Log an error
      */
     public static void log(Throwable e) {
@@ -193,7 +186,7 @@ public class Orebfuscator extends JavaPlugin {
         e.printStackTrace();
     }
 
-    /**
+    /*
      * Send a message to a player
      */
     public static void message(CommandSender target, String message) {

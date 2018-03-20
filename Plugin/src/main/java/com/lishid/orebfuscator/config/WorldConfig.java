@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -170,7 +170,7 @@ public class WorldConfig {
     		return null;
     	}
     	
-    	List<Integer> result = new ArrayList<Integer>();
+    	List<Integer> result = new ArrayList<>();
     	
     	for(int i = 0; i < this.obfuscateBlocks.length; i++) {
     		if(this.obfuscateBlocks[i]) {
@@ -212,7 +212,7 @@ public class WorldConfig {
     		return null;
     	}
     	
-    	List<Integer> result = new ArrayList<Integer>();
+    	List<Integer> result = new ArrayList<>();
     	
     	for(int i = 0; i < this.darknessBlocks.length; i++) {
     		if(this.darknessBlocks[i]) {
@@ -256,7 +256,7 @@ public class WorldConfig {
     		return;
     	}
     	
-    	HashSet<Integer> map = new HashSet<Integer>();
+    	HashSet<Integer> map = new HashSet<>();
     	
     	map.add(0);
     	map.add(this.mode1BlockId);

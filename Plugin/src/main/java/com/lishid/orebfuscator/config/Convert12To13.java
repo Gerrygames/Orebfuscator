@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -99,7 +99,7 @@ public class Convert12To13 {
         	worldNames = oldConfig.getStringList("Lists.DisabledWorlds");
         }
         
-		if(worldNames != null && worldNames.size() > 0) {
+		if(worldNames != null && !worldNames.isEmpty()) {
 			this.config.set("Worlds.CustomWorld.Names", worldNames);
 			this.config.set("Worlds.CustomWorld.Enabled", !worldEnabled);
 		}

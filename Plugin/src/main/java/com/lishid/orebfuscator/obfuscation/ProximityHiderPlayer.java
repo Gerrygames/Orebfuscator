@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -19,7 +19,7 @@ public class ProximityHiderPlayer {
 	
 	public ProximityHiderPlayer(World world) {
 		this.world = world;
-		this.chunks = new HashMap<Long, ArrayList<BlockCoord>>();
+		this.chunks = new HashMap<>();
 	}
 	
 	public World getWorld() {

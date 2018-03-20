@@ -14,7 +14,7 @@ public class CacheCleaner implements Runnable {
         int count = 0;
         
         for(World world : Bukkit.getWorlds()) {
-	        File cacheFolder = new File(ObfuscatedDataCache.getCacheFolder(), world.getName());
+	        File cacheFolder = new File(world.getWorldFolder(), "cache");
 	        count += ObfuscatedDataCache.deleteFiles(cacheFolder, Orebfuscator.config.getDeleteCacheFilesAfterDays());
         }
         

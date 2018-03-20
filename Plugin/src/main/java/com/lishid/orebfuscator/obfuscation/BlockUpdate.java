@@ -29,7 +29,6 @@ import org.bukkit.block.Block;
 import com.lishid.orebfuscator.DeprecatedMethods;
 import com.lishid.orebfuscator.Orebfuscator;
 import com.lishid.orebfuscator.cache.ObfuscatedCachedChunk;
-import com.lishid.orebfuscator.cache.ObfuscatedDataCache;
 import com.lishid.orebfuscator.config.WorldConfig;
 import com.lishid.orebfuscator.nms.IBlockInfo;
 import com.lishid.orebfuscator.types.ChunkCoord;
@@ -54,8 +53,8 @@ public class BlockUpdate {
 
         World world = blocks.get(0).getWorld();
         WorldConfig worldConfig = Orebfuscator.configManager.getWorld(world);
-        HashSet<IBlockInfo> updateBlocks = new HashSet<IBlockInfo>();
-    	HashSet<ChunkCoord> invalidChunks = new HashSet<ChunkCoord>();
+        HashSet<IBlockInfo> updateBlocks = new HashSet<>();
+    	HashSet<ChunkCoord> invalidChunks = new HashSet<>();
     	int updateRadius = Orebfuscator.config.getUpdateRadius();
         
         for (Block block : blocks) {
@@ -89,8 +88,8 @@ public class BlockUpdate {
 
         World world = locations.get(0).getWorld();
         WorldConfig worldConfig = Orebfuscator.configManager.getWorld(world);
-        HashSet<IBlockInfo> updateBlocks = new HashSet<IBlockInfo>();
-    	HashSet<ChunkCoord> invalidChunks = new HashSet<ChunkCoord>();
+        HashSet<IBlockInfo> updateBlocks = new HashSet<>();
+    	HashSet<ChunkCoord> invalidChunks = new HashSet<>();
         
         for (Location location : locations) {
         	IBlockInfo blockInfo = Orebfuscator.nms.getBlockInfo(world, location.getBlockX(), location.getBlockY(), location.getBlockZ());
@@ -124,7 +123,7 @@ public class BlockUpdate {
     private static void invalidateCachedChunks(World world, Set<ChunkCoord> invalidChunks) {
     	if(invalidChunks.isEmpty() || !Orebfuscator.config.isUseCache()) return;
     	
-        File cacheFolder = new File(ObfuscatedDataCache.getCacheFolder(), world.getName());
+        File cacheFolder = new File(world.getWorldFolder(), "cache");
 
         for(ChunkCoord chunk : invalidChunks) {
             ObfuscatedCachedChunk cache = new ObfuscatedCachedChunk(cacheFolder, chunk.x, chunk.z);

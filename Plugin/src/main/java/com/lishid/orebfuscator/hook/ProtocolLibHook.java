@@ -109,7 +109,7 @@ public class ProtocolLibHook {
     	}
     	
     	List list = packet.getSpecificModifier(List.class).read(0);
-    	List<NbtCompound> result = new ArrayList<NbtCompound>();
+    	List<NbtCompound> result = new ArrayList<>();
     	
     	for(Object tag : list) {
     		result.add(NbtFactory.fromNMSCompound(tag));

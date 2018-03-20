@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -204,7 +204,7 @@ public class OrebfuscatorConfig {
         String worldNames = "";
 
         for(WorldConfig world : this.worlds.values()) {
-            if(worldNames.length() > 0) {
+            if(!worldNames.isEmpty()) {
                 worldNames += ", ";
             }
 

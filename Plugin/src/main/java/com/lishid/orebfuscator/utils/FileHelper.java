@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -15,20 +15,15 @@ public class FileHelper {
     	if(!file.exists()) return null;
     	
     	StringBuilder text = new StringBuilder("");
-    	
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		
-		try {
-    		String line;
-    		
-            while ((line = reader.readLine()) != null) { 
-            	text.append(line);
-            	text.append("\n");
-            }
-		}
-		finally {
-			reader.close();
-		}
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+		    String line;
+
+		    while ((line = reader.readLine()) != null) {
+			    text.append(line);
+			    text.append("\n");
+		    }
+	    }
 		
 		return text.toString();
     }

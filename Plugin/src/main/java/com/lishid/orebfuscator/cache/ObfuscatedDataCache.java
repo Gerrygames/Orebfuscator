@@ -21,13 +21,13 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Objects;
 
 import org.bukkit.Bukkit;
 
 import com.lishid.orebfuscator.Orebfuscator;
 import com.lishid.orebfuscator.nms.IChunkCache;
 import com.lishid.orebfuscator.utils.FileHelper;
+import org.bukkit.World;
 
 public class ObfuscatedDataCache {
 	private static final String cacheFileName = "cache_config.yml";
@@ -44,54 +44,28 @@ public class ObfuscatedDataCache {
     public static void resetCacheFolder() {
     	cacheFolder = null;
     }
-    
-    public static File getCacheFolder() {
-    	if(cacheFolder == null) {
-    		cacheFolder = new File(Bukkit.getServer().getWorldContainer(), Orebfuscator.config.getCacheLocation());
-    	}
-    	
-        // Try to make the folder
-        if (!cacheFolder.exists()) {
-        	cacheFolder.mkdirs();
-        }
-        // Can't make folder? Use default
-        if (!cacheFolder.exists()) {
-        	cacheFolder = new File("orebfuscator_cache");
-        }
-        return cacheFolder;
-    }
 
     public static void closeCacheFiles() {
         getInternalCache().closeCacheFiles();
     }
     
-    public static void checkCacheAndConfigSynchronized() throws IOException {
-    	String configContent = Orebfuscator.instance.getConfig().saveToString();
-    	
-    	File cacheFolder = getCacheFolder();
-    	File cacheConfigFile = new File(cacheFolder, cacheFileName);    	
-		String cacheConfigContent = FileHelper.readFile(cacheConfigFile);
-		
-		if(Objects.equals(configContent, cacheConfigContent)) return;
-
-		clearCache();
-    }
-    
     public static void clearCache() throws IOException {
     	closeCacheFiles();
-    	
-    	File cacheFolder = getCacheFolder();
-    	File cacheConfigFile = new File(cacheFolder, cacheFileName);
-    	
-		if(cacheFolder.exists()) {
-			FileHelper.delete(cacheFolder);
-		}
-		
-		Orebfuscator.log("Cache cleared.");
-		
-		cacheFolder.mkdirs();
-		
-		Orebfuscator.instance.getConfig().save(cacheConfigFile);
+
+	    for (World world : Bukkit.getWorlds()) {
+		    File cacheFolder = new File(world.getWorldFolder(), "cache");
+		    File cacheConfigFile = new File(cacheFolder, cacheFileName);
+
+		    if(cacheFolder.exists()) {
+			    FileHelper.delete(cacheFolder);
+		    }
+
+		    Orebfuscator.log("Cache cleared.");
+
+		    cacheFolder.mkdirs();
+
+		    Orebfuscator.instance.getConfig().save(cacheConfigFile);
+	    }
     }
 
     public static DataInputStream getInputStream(File folder, int x, int z) {

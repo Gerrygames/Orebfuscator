@@ -1,4 +1,4 @@
-/**
+/*
  * @author Aleksey Terzi
  *
  */
@@ -68,7 +68,7 @@ public class MaterialReader {
     		withSave = true;
     	} else {
     		if(defaultMaterials != null) {
-        		list = new ArrayList<String>();
+        		list = new ArrayList<>();
 
         		for(int materialId : defaultMaterials) {
 	    			list.add(DeprecatedMethods.getMaterial(materialId).name());
@@ -78,7 +78,7 @@ public class MaterialReader {
     		}
     	}
     	
-    	List<Integer> result = new ArrayList<Integer>();
+    	List<Integer> result = new ArrayList<>();
     	
     	for(int i = 0; i < list.size(); i++) {
     		MaterialResult material = getMaterial(list.get(i), null);

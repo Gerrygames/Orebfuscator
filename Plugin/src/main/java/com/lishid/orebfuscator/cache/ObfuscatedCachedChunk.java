@@ -32,11 +32,7 @@ public class ObfuscatedCachedChunk {
     public long hash = 0L;
     private boolean loaded = false;
 
-    private static final ThreadLocal<INBT> nbtAccessor = new ThreadLocal<INBT>() {
-        protected INBT initialValue() {
-            return Orebfuscator.nms.createNBT();
-        }
-    };
+    private static final ThreadLocal<INBT> nbtAccessor = ThreadLocal.withInitial(() -> Orebfuscator.nms.createNBT());
 
     public ObfuscatedCachedChunk(File file, int x, int z) {
         this.x = x;

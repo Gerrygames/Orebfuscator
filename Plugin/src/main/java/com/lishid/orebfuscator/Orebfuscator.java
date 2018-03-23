@@ -19,6 +19,7 @@ package com.lishid.orebfuscator;
 import java.io.*;
 import java.util.logging.Logger;
 
+import com.lishid.orebfuscator.listeners.OrebfuscatorWorldListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -82,6 +83,7 @@ public class Orebfuscator extends JavaPlugin {
         pm.registerEvents(new OrebfuscatorPlayerListener(), this);
         pm.registerEvents(new OrebfuscatorEntityListener(), this);
         pm.registerEvents(new OrebfuscatorBlockListener(), this);
+        pm.registerEvents(new OrebfuscatorWorldListener(), this);
 
         (new ProtocolLibHook()).register(this);
         

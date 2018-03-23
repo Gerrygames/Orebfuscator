@@ -33,4 +33,6 @@ public interface INmsManager {
 	int loadChunkAndGetBlockId(World world, int x, int y, int z);
 	
 	String getTextFromChatComponent(String json);
+
+	void patchPlayerChunkMap(World world);
 }

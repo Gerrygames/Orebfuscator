@@ -13,7 +13,6 @@ import net.minecraft.server.v1_12_R1.ChunkProviderServer;
 import net.minecraft.server.v1_12_R1.IBlockData;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.Packet;
-import net.minecraft.server.v1_12_R1.PlayerChunkMap;
 import net.minecraft.server.v1_12_R1.TileEntity;
 import net.minecraft.server.v1_12_R1.WorldServer;
 
@@ -29,11 +28,6 @@ import com.lishid.orebfuscator.nms.INBT;
 import com.lishid.orebfuscator.nms.INmsManager;
 import com.lishid.orebfuscator.types.BlockCoord;
 import com.lishid.orebfuscator.types.BlockState;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Collections;
-import java.util.Set;
 
 public class NmsManager implements INmsManager {
 	private int maxLoadedCacheFiles;
@@ -121,24 +115,6 @@ public class NmsManager implements INmsManager {
 	public String getTextFromChatComponent(String json) {
 		IChatBaseComponent component = IChatBaseComponent.ChatSerializer.a(json);
 		return CraftChatMessage.fromComponent(component);
-	}
-
-	@Override
-	public void patchPlayerChunkMap(World world) {
-		WorldServer worldServer = ((CraftWorld)world).getHandle();
-		try {
-			PlayerChunkMap chunkMap = worldServer.getPlayerChunkMap();
-			Field field = chunkMap.getClass().getDeclaredField("f");
-			field.setAccessible(true);
-			Field modifiers = Field.class.getDeclaredField("modifiers");
-			modifiers.setAccessible(true);
-			if (Modifier.isFinal(field.getModifiers())) {
-				modifiers.set(field, field.getModifiers() & ~Modifier.FINAL);
-			}
-			field.set(chunkMap, Collections.synchronizedSet((Set) field.get(chunkMap)));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 	
 	private IBlockData getBlockData(World world, int x, int y, int z, boolean loadChunk) {
